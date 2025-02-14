@@ -1,4 +1,4 @@
-# PHẦN MỀM TÍNH HIỆU SUẤT MÁY CNC - 0EE
+# PHẦN MỀM TÍNH HIỆU SUẤT MÁY CNC - OEE
 ![overall equipment effectiveness](/assets/dashboard.png)
 ### GIỚI THIỆU
 Phần mềm thu thập dữ liệu thời gian máy chạy, thời gian máy dừng qua các Hộp điều khiển OEE. Tính toán và đưa ra các chỉ số OEE: Sự sẵn sàng (Availability), Hiệu suất (Performance), Chất lượng (Quality). Từ đó giúp người quản lý có những đánh giá và điều chỉnh phù hợp để nâng cao hiệu suất. Hệ thống hoạt động trong mạng LAN cục bộ, người dùng có thể truy cập để giám sát từ xa thông qua trình duyệt web.
