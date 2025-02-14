@@ -11,5 +11,5 @@ Phần mềm thu thập dữ liệu thời gian máy chạy, thời gian máy d�
 - Java Spring boot, MS SQL Server
 - Ngôn ngữ: Java, HTML, CSS, Javascript
 
-![overall equipment effectiveness](/assets/chart_1.jpg)
-![overall equipment effectiveness](/assets/database.jpg)
+![overall equipment effectiveness](/assets/chart_1.JPG)
+![overall equipment effectiveness](/assets/database.JPG)
