@@ -1,0 +1,214 @@
+@charset "UTF-8";
+*{
+	margin: 1px;
+	padding: 0;
+	box-sizing: border-box;
+}
+body{
+	height: 100vh;
+	font-family: sans-serif;
+	display: flex;
+	font-size: 16px;
+	flex-direction: column;
+	flex: 1;
+	overflow: hidden;
+}
+
+@keyframes move{
+	0%{
+		opacity: 0;
+		transform: translateY(0);		
+	}
+	10%{
+		opacity: 1;	
+	}
+	90%{
+		opacity: 1;	
+	}
+	100%{
+		opacity: 0;	
+		transform: translateY(50vh);	
+	}
+}
+
+/*HEADER - FOOTER*/
+header{
+	padding: 0 0 0 0;
+	flex: 1 1 5%;
+}
+.wrapper{
+	text-align: center;
+}
+.wrapper-footer{
+	color: #fff;
+}
+footer{
+	background: #171F22;
+	padding: 1em 0 1em 0;
+	flex: 1 1 5%;
+}
+
+/*CONTENT*/
+.main_content{
+	display: flex;
+	flex: 1 1 90%;
+}
+/*** LEFT - RIGHT ***/
+.left{
+	padding: 5em 0 5em 0;
+	flex: 1 1 5%;
+}
+.right{
+	padding: 5em 0 5em 0;
+	flex: 1 1 0%;
+}
+
+/*** MAIN ***/
+main{
+	padding: 5em 0 5em 0;
+	flex: 1 1 90%;		
+	background-image: url(../imgs/mountain.jpg);
+	background-size: cover;
+	max-height: 85vh;
+  	overflow-y: scroll;
+  	overflow-x: none;
+	grid-gap: 16px;
+	padding: 16px;
+}
+main .oee{
+	float: left;
+	margin-left: 10px;
+  	margin-top: 10px;
+  	width: 500px;
+  	height: 500px;
+  	background-color: rgba(255, 255, 255, 0.1);
+  	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  	background-image: linear-gradient(0deg, #009052, transparent);
+}
+
+/*** *** MAIN TOP *** ***/
+.oee__top{
+	width: 100%;
+	height: 100px;
+	background: transparent;
+	display: inline-block;
+}
+.oee__top--title{
+	margin: 20px 0 0 20px;
+	float: left;
+	color:  white;
+}
+.oee__top--button{
+	float: right;
+	margin-right: 5px;
+	margin-top: 5px;
+	background-color: #669999;
+	border-width: 3px;
+	border-radius: 10px;
+	border-color: #66ff33;
+	color:  #fff;
+	size: 12px;
+	width: 50px;
+	height: 50px;
+}
+/*** *** MAIN CENTER *** ***/
+.oee__center{
+	width: 100%;
+	height: 350px;
+	background: transparent;
+	display: flex;
+	flex-direction: column;
+}
+.oee__center--time{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+.oee__center--time > div{
+	margin: 1px;
+    padding: 2px;
+    color: #fff;
+}
+.production-time{
+	display: flex;
+	flex-direction: column;
+}
+.run-time{
+	display: flex;
+	flex-direction: column;
+}
+.down-time{
+	display: flex;
+	flex-direction: column;
+}
+
+.oee__center--index{
+	display: flex;
+  	flex-wrap: wrap;
+}
+.oee__center--index > div{
+	flex-grow: 0;
+  	flex-shrink: 0;
+  	flex-basis: calc(33.33% - 20px);
+}
+
+.oee-index{
+	margin-top: 40px;
+	margin-left: 10px;
+	width: 50%;
+	height: auto;
+	text-align: center;
+}
+
+.circular-progress{
+	position: relative;
+	height: 220px;
+	width: 220px;
+	border-radius: 50%;
+	background-color: transparent;
+	background: conic-gradient(rgb(255, 255, 0) 252deg, #ededed 0deg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.circular-progress::before{
+	content: "";
+	color: red;
+	position: absolute;
+	height: 180px;
+	width: 180px;
+	background-color: rgb(255, 255, 255);
+	border-radius: 50%;
+}
+.progress-value{
+	position: relative;
+	font-size: 50px;
+	font-weight: 20px;
+	color: rgb(0, 128, 128);
+}
+.progress-text{
+	font-size: 25px;
+	font-weight: 10px;
+	color: #fff;
+}
+
+.apq-index{
+	width: 50%;
+	height: auto;
+	margin-top: 50px;
+	padding: 20px;
+}
+.apq-index .apq-index__w3-container p{
+	color: #fff;
+}
+	
+/*** *** MAIN BOTTOM *** ***/
+.oee__bottom{
+	width: 100%;
+	height: 10px;
+	background: transparent;
+}
+
+
+ 
+
