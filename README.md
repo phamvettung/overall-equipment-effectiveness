@@ -9,7 +9,7 @@ Phần mềm thu thập dữ liệu thời gian máy chạy, thời gian máy d�
 - Tổng hợp dữ liệu thời gian máy dừng. Tính OEE theo ngày, theo tháng.
 ### CÁC CÔNG NGHỆ SỬ DỤNG
 - Java Spring boot, MS SQL Server
-- Ngôn ngữ: Java, HTML, CSS, Javascript
+- Ngôn ngữ: Java, CSS, Javascript
 
 ![overall equipment effectiveness](/assets/chart_1.JPG)
 ![overall equipment effectiveness](/assets/database.JPG)
