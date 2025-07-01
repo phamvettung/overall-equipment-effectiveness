@@ -12,7 +12,7 @@ Hệ thống thu thập dữ liệu thời gian máy chạy, máy dừng, các n
 - Hệ thống hoạt động trong mạng LAN cục bộ, người dùng có thể truy cập giám sát từ xa thông qua trình duyệt web.
 
 ### SƠ ĐỒ KẾT NỐI
-![overall equipment effectiveness](/assets/oee_diagram.png)
+![overall equipment effectiveness](/assets/oee_diagram.PNG)
 
 ### CÁC CÔNG NGHỆ SỬ DỤNG
 - Java Spring boot, MS SQL Server
