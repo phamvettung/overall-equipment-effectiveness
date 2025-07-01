@@ -14,11 +14,18 @@ Hệ thống thu thập dữ liệu thời gian máy chạy, máy dừng, các n
 ### SƠ ĐỒ KẾT NỐI
 ![overall equipment effectiveness](/assets/oee_diagram.PNG)
 
-- Phần mềm OEE Client kết nối tới OEE Server thông qua RESTful API
+- Phần mềm OEE Client kết nối tới OEE Server thông qua RESTful API.
 - OEE Client kết nối tới các Bộ điều khiển OEE, thu thập các nguyên nhân dừng máy thông qua việc nhấn nút từ người vân hành.
 - OEE Client kết nối tới các Máy CNC để thu thập thời gian máy hoạt động, số dụng cụ được sử dụng, số lần thay dụng cụ,... Giao thức kết nối được mô tả ở đây:
 https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-collection---ngc.html
 
+### CẤU TRÚC BẢNG
+![overall equipment effectiveness](/assets/structure_db.PNG)
+
+- Bảng machine: quản lý các máy CNC. Thêm mới, chỉnh sửa, xóa.
+- Bảng input: thu thập dữ liệu dừng máy theo các nguyên nhân khác nhau.
+- Bảng machine_data_collection: thu thập thời gian máy hoạt động, trạng thái hiện tại của máy (running/stopped),...
+- Bảng account: quản lý, xác thực người dùng.
 
 ### CÁC CÔNG NGHỆ SỬ DỤNG
 - Java Spring boot, MS SQL Server
