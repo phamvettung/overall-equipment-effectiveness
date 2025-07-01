@@ -31,5 +31,8 @@ https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-c
 - Java Spring Boot, Spring Security JWT, Hibernate, JPA.
 - Hệ Quản trị CSDL: MS SQL Server.
 
+### HOẠT ĐỘNG
+[Watch demo video](./assets/oee_webapp.mp4)
+
 ### TEST API
 https://github.com/user-attachments/assets/fe55e83c-89db-47f0-858b-9f42a2b25e60
