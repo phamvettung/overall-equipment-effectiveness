@@ -6,13 +6,19 @@ Hệ thống thu thập dữ liệu thời gian máy chạy, máy dừng, các n
 - Hiển thị các chỉ số A, P, Q, OEE,.. Đưa ra biểu đồ thống kê: Hiệu suất OEE, Thời gian lãng phí, Thời gian chạy máy/dừng máy.
 - Tổng hợp chi tiết thời gian máy chạy, máy dừng. Trích xuất dữ liệu theo từng tháng, từng ngày.
 - Thu thập dữ liệu tự động hoặc nhập liệu bằng tay.
-- Cung cấp các API cho các hệ thống khác lấy dữ liệu.
+- Cung cấp các API cho các hệ thống khác, bảo mật API.
 - Tính năng đăng nhập, xác thực người dùng.
 - Quản lý máy: thêm, sửa, xóa.
 - Hệ thống hoạt động trong mạng LAN cục bộ, người dùng có thể truy cập giám sát từ xa thông qua trình duyệt web.
 
 ### SƠ ĐỒ KẾT NỐI
 ![overall equipment effectiveness](/assets/oee_diagram.PNG)
+
+- Phần mềm OEE Client kết nối tới OEE Server thông qua RESTful API
+- OEE Client kết nối tới các Bộ điều khiển OEE, thu thập các nguyên nhân dừng máy thông qua việc nhấn nút từ người vân hành.
+- OEE Client kết nối tới các Máy CNC để thu thập thời gian máy hoạt động, số dụng cụ được sử dụng, số lần thay dụng cụ,... Giao thức kết nối được mô tả ở đây:
+https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-collection---ngc.html
+
 
 ### CÁC CÔNG NGHỆ SỬ DỤNG
 - Java Spring boot, MS SQL Server
