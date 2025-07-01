@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/sidebar-style.css">
+	<link rel="stylesheet" href="css/header-style.css">
+	<link rel="stylesheet" href="css/data-style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Overall Equipment Effectiveness</title>
+</head>
+
+<body>
+	<header th:replace="~{layout/header::header}"></header>	
+	<aside th:replace="~{layout/sidebar::sidebar}"></aside>
+	<div class="container">		
+			<div class="field-responsive">
+				<header>OEE Details</header>
+				<div class="input-box">
+					<label for="machineSelect">Machine name</label>
+					<select id="machineSelect" th:field="*{machines}" class="machine-select" onchange="if (this.selectedIndex) machineSelectOnChange();">
+						<option value="" disabled selected>Select a machine</option>
+						<option value="none">None</option>	
+						<optgroup label="Máy CNC">
+						    <option th:if="${machine.code.contains('CNC')}"
+									th:each="machine: ${machines}" 
+									th:value="${machine.id}" 
+									th:text="${machine.name}"></option>
+						</optgroup>				
+						<optgroup label="Máy Tiện">
+						    <option th:if="${machine.code.contains('T')}"
+									th:each="machine: ${machines}" 
+									th:value="${machine.id}" 
+									th:text="${machine.name}"></option>
+						</optgroup>	
+						<option value="all">Tất cả</option>										
+					</select>
+				</div>
+				
+				<div class="input-box">
+					<label for="startDate">Start date</label>
+					<input type="datetime-local" id="startDate" placeholder="Enter start date" required>
+				</div>
+				
+				<div class="input-box">
+					<label for="endDate">End date</label>
+					<input type="datetime-local" id="endDate" placeholder="Enter end date" required>
+				</div>
+				
+				<div class="input-box">
+					<button class="w3-button w3-khaki" onclick="acceptButtonOnClick();">Accept</button>
+				</div>
+					
+			</div>
+	
+			<div class="table-responsive">
+			    <table id="oeeTable">
+			      <thead>
+			        <tr>
+			          <th>Ngày</th>
+			          <th>Tên máy</th>
+			          <th th:each="downtime: ${downtimes}" th:text="${downtime.name}" th:abbr="${downtime.type}"></th>
+			          <th>Số ngày nhập liệu</th>
+			          <th>Total Run time</th>
+			          <th>Total Down time</th>
+			          <th>A</th>
+			          <th>P</th>
+			          <th>Q</th>
+			          <th>Hiệu suất tổng thể - OEE</th>
+			        </tr>
+			      </thead>
+			      <tbody id="oeeRow">
+		        		<tr th:each="oee: ${oees}" onclick="getDateOnClick(this)">
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.date}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.machineName}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f0}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f00}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f1}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f2}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f3}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f4}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f5}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f6}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f7}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f8}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f9}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.f10}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.din}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.downtime}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.runtime}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.a}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.p}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.q}"></td>
+		        			<td onclick="getDowntimeTypeOnClick(this)" ondblclick="showDetailOnDblClick()" th:text="${oee.oee}"></td>		        			
+		        		</tr>	        		 		        		
+			    	</tbody>
+			</table>
+		</div>	
+			
+		<div class="container mt-3 detail-form" id="detailForm">
+		  	<div class="detail-content">
+			  <h2>DETAILS OF MACHINE DOWNTIME</h2>
+			  <p>View detailed downtime during the day.</p>
+			  <table class="table">
+			    <thead>
+			      <tr>
+			        <th>ID</th>
+			        <th>Machine name</th>
+			        <th>Date</th>
+			        <th>Time</th>
+			        <th>Downtime type</th>
+			        <th>Value (minute)</th>			
+			        <th>Tasks</th>			       							        
+			      </tr>
+			    </thead>
+			    <tbody id="inputRows">
+			      <tr>
+			      </tr>      							      
+			    </tbody>
+			  </table>
+			  <button type="button" class="btn btn-warning" onclick="closeDetailForm()">Close</button>
+			</div>
+		</div>
+	</div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	let selectMachine = document.querySelector(".machine-select");
+	var ajaxRequest;
+	var machineId = "", machineName = "";
+	
+	function machineSelectOnChange(){
+		machineId = selectMachine.value;
+		machineName = selectMachine.options[selectMachine.selectedIndex].text;
+	}
+	
+	function getXMLHttpRequest() {
+		var request, err;
+		try {
+			request = new XMLHttpRequest();
+		} catch (err) {
+			try {
+				request = new ActiveXObject("MSXML2.XMLHttp.6.0");
+			} catch (err) {
+				try {
+					request = new ActiveXObject("MSXML2.XMLHttp.3.0");
+				} catch (err) {
+					request = false;
+				}
+			}
+		}
+		return request;
+	}
+	
+	function ajaxResponse() {
+		if (ajaxRequest.readyState != 4) {
+			return;
+		} else {
+			if (ajaxRequest.status == 200) {
+				console.log(ajaxRequest.responseText);
+				document.getElementById("oeeRow").innerHTML = "";
+				document.getElementById("oeeRow").innerHTML = ajaxRequest.responseText;
+			} else {
+				alert("Request failed: " + ajaxRequest.statusText);
+			}
+		}
+	}
+	
+	function acceptButtonOnClick(){
+		if(machineId == ""){
+			alert("Let select a machine.");
+			return;
+		}
+		
+		var start = document.getElementById("startDate").value;
+		var end = document.getElementById("endDate").value;
+		if(start == "" || end == ""){
+			alert("Incorrect date.");
+			return;
+		}
+		
+		var startDate = new Date(start), endDate = new Date(end);	
+		var startFormat = [startDate.getFullYear(),
+			               startDate.getMonth()  + 1,
+			               startDate.getDate()].join('-') +' ' +
+			              [startDate.getHours(),
+			               startDate.getMinutes(),
+			               startDate.getSeconds()].join(':');              
+		var endFormat = [endDate.getFullYear(),
+			               endDate.getMonth()  + 1,
+			               endDate.getDate()].join('-') +' ' +
+			              [endDate.getHours(),
+			               endDate.getMinutes(),
+			               endDate.getSeconds()].join(':');	
+		
+		ajaxRequest = getXMLHttpRequest();
+		if (!ajaxRequest) {
+			document.getElementById("oeeTable").innerHTML = "Request error!";
+			return;
+		}
+		var url = "data";
+		ajaxRequest.onreadystatechange = ajaxResponse;
+		ajaxRequest.open("POST", url, true);
+		ajaxRequest.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+		ajaxRequest.send("mid=" + machineId + "&start=" + startFormat + "&end=" + endFormat + "");
+	}
+	
+	var i = -1; j = -1;
+	var downtimeType, date;
+	
+	function getDateOnClick(x){
+		i = x.rowIndex;
+		var rows = oeeTable.getElementsByTagName("tr");
+		var cells = rows[i].getElementsByTagName("td");
+		date = cells[0].innerText;
+	}
+	
+	function getDowntimeTypeOnClick(y) {
+		j = y.cellIndex;
+		var rows = oeeTable.getElementsByTagName("tr");
+		var cells = rows[0].getElementsByTagName("th");
+		downtimeType = cells[j].abbr
+	}
+		
+	function showDetailOnDblClick() {
+		if (machineId == null) {
+			alert("You are not slected machine name yet. Let select the machine you want to see it.");
+			return;
+		}			
+		detailForm.style.display = "block";
+		getInputs(date, downtimeType, machineId);
+	}
+	
+	function closeDetailForm(){
+		detailForm.style.display = "none";
+	}
+	
+	var ajaxRequestDeital;
+	function getInputs(date, type, mid) {
+		ajaxRequestDeital = getXMLHttpRequest();
+		if (!ajaxRequestDeital) {
+			document.getElementById("detailForm").innerHTML = "Request error!";
+			return;
+		}	
+		var url = "data/detail-form";
+		ajaxRequestDeital.onreadystatechange = ajaxResponseDetail;
+		ajaxRequestDeital.open("POST", url, true);
+		ajaxRequestDeital.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+		ajaxRequestDeital.send("date=" + date + "&type=" + type + "&mid=" + mid + "");		
+	}
+	
+	function ajaxResponseDetail() {
+		if (ajaxRequestDeital.readyState != 4) {
+			return;
+		} else {
+			if (ajaxRequestDeital.status == 200) {		
+				console.log(ajaxRequestDeital.responseText);		
+				document.getElementById("inputRows").innerHTML = "";
+				document.getElementById("inputRows").innerHTML = ajaxRequestDeital.responseText;
+			} else {
+				alert("Request failed: " + ajaxRequestDeital.statusText);
+			}
+		}
+	}	
+	
+	function removeInput(id){
+		$.ajax({
+		    url:"data/remove-input/" + id,
+		    dataType:"html",
+		    type:"POST",
+		    data: {param: ""},
+		    success: function(result){
+		    	alert("Removed.");
+		    	closeDetailForm();   	
+		    }
+		});
+	}
+	
+	</script>
+	
+</body>
+
+<style>
+	/* The Form (background) */
+	.detail-form {
+	  display: none; /* Hidden by default */
+	  position: fixed; /* Stay in place */
+	  z-index: 1; /* Sit on top */
+	  padding-top: 100px; /* Location of the box */
+	  left: 0;
+	  top: 0;
+	  width: 100%; /* Full width */
+	  height: 100%; /* Full height */
+	  overflow: auto; /* Enable scroll if needed */
+	  background-color: rgb(0,0,0); /* Fallback color */
+	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+	
+	/* Modal Content */
+	.detail-content {
+	  background-color: #fefefe;
+	  margin: auto;
+	  padding: 20px;
+	  border: 1px solid #888;
+	  width: 80%;
+	}
+</style>
+
+</html>

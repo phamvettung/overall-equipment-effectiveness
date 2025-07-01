@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/sidebar-style.css">
+		<link rel="stylesheet" href="css/header-style.css">
+		<link rel="stylesheet" href="css/trend-style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">		
+		<title>Overall Equipment Effectiveness</title>
+	</head>
+<body>
+	<header th:replace="~{layout/header::header}"></header>	
+	<aside th:replace="~{layout/sidebar::sidebar}"></aside>
+	
+	<div class="container" style="width: 100%; height: 100vh; position: absolute; z-index: 1">
+		<div class="field-responsive">
+			<header>Trend</header>
+			<div class="input-box">
+				<label>Start date</label>
+		    	<input type="datetime-local" id="startDate">
+			</div>
+			<div class="input-box">
+				<label>End date</label>
+		    	<input type="datetime-local" id="endDate">
+			</div>
+			
+			<div class="input-box">
+				<label>Machine name</label>
+		    	<select th:field="*{machines}" class="machine-select" onchange="if (this.selectedIndex) machineOnChange();">
+					<option value="" disabled selected>Select a machine</option>
+					<option value="none">None</option>	
+					<optgroup label="Máy CNC">
+					    <option th:if="${machine.code.contains('CNC')}"
+								th:each="machine: ${machines}" 
+								th:value="${machine.id}" 
+								th:text="${machine.name}"></option>
+					</optgroup>				
+					<optgroup label="Máy Tiện">
+					    <option th:if="${machine.code.contains('T')}"
+								th:each="machine: ${machines}" 
+								th:value="${machine.id}" 
+								th:text="${machine.name}"></option>
+					</optgroup>	
+					<option value="all">Tất cả</option>										
+				</select>
+			</div>
+			
+			<div class="input-box">
+				<button type="button" onclick="btnOeeOnClick();"><span>OEE </span></button>
+				<button type="button" onclick="btnDowntimeOnClick();"><span>Down time </span></button>
+				<button type="button" onclick="btnRuntimeOnClick();"><span>Downtime/Runtime </span></button>
+			</div>
+			
+		</div>
+				
+		<div class="trend-responsive" id="chart_div">
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/trend-script.js"></script>
+	
+</body>
+</html>

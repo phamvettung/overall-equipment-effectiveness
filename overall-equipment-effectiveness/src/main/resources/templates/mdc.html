@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Overall Equipment Effectiveness</title>
+</head>
+<body>
+	<header th:replace="~{layout/header::header}"></header>	
+	<aside th:replace="~{layout/sidebar::sidebar}"></aside>
+	<div class="container">	
+		
+			<div class="field-responsive">
+				<header>Machine Data Collection</header>
+							
+				<div class="input-box">
+					<label>Start date</label>
+					<input type="datetime-local" id="startDate" placeholder="Enter start date" required>
+				</div>
+				
+				<div class="input-box">
+					<label>End date</label>
+					<input type="datetime-local" id="endDate" placeholder="Enter end date" required>
+				</div>
+				
+				<div class="input-box">
+					<button class="w3-button w3-khaki" onclick="acceptButtonOnClick();">Accept</button>
+				</div>
+					
+			</div>
+	
+			<div class="table-responsive">
+			    <table id="mdcTable">
+			      <thead>
+			        <tr>
+			          <th>Machine name</th>
+			          <th th:each="qcommand: ${qCommands}" th:text="${qcommand.definition}"></th>
+			        </tr>
+			      </thead>
+			      <tbody id="mdcRow">
+        		 	<tr th:each="item: ${mdc}">
+        		 		<td th:text="${item.machineName}"></td>
+        		 		<td th:text="${item.q200}"></td>
+        		 		<td th:text="${item.q201}"></td>
+        		 		<td th:text="${item.q300}"></td>
+        		 		<td th:text="${item.q301}"></td>
+        		 		<td th:text="${item.q500}"></td>
+        		 	</tr>		
+			      </tbody>
+			</table>		
+		</div>	
+		
+		
+	</div>
+</body>
+
+<style>
+
+
+.title{
+	background: #FFFFFF;
+	position: relative;
+	height: 60px;
+	width: 100%;
+	align-content: center;
+	text-align: center;
+}
+
+.title label{
+	color: #008000;
+	font-size: 25px;
+	font-weight: 500;
+}
+
+@media only screen and (max-width: 786px){
+    .title label{
+		color: #008000;
+		font-size: 16px;
+		font-weight: 200;
+    }
+}
+
+@media only screen and (max-width: 540px){
+    .title label{
+		color: #008000;
+		font-size: 13px;
+		font-weight: 180;
+    }
+}
+
+
+
+
+.sidebar_menu{
+	position: fixed;
+	height:100vh;
+	width:280px;
+	left: -280px;
+	background: rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar_menu .logo{
+	position: absolute;
+	width: 100%;
+	height: 60px;
+	box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+.sidebar_menu .logo a{
+	color: #fff;
+	font-size: 25px;
+	font-weight: 500;
+	position: absolute;
+	left: 50px;
+	line-height: 60px;
+	text-decoration: none;
+}
+
+.sidebar_menu .menu{
+	position:absolute;
+	top: 80px;
+	width: 100%;
+}
+
+.sidebar_menu .menu li{
+	margin-top: 6px;
+	padding: 14px 20px;
+	transition: all 0.3s linear;
+}
+
+.sidebar_menu .menu i{
+	color: #fff;
+	font-size: 20px;
+	padding-right: 8px;
+}
+
+.sidebar_menu .menu a{
+	color: #fff;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.sidebar_menu .menu li:hover{
+	border-left: 1px solid #fff;
+	box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+.sidebar_menu .social_media{
+	position: absolute;
+	left: 50%;
+	bottom: 20px;
+	transform: translateX(-50%);
+	cursor: pointer;
+}
+
+.social_media i{
+	padding: 0 5px;
+	color: #fff;
+	opacity: 0.6;
+	font-size: 20px;
+	transition: all 0.2s linear;
+}
+
+.social_media i:hover{
+	opacity: 1;	
+}
+
+#check{
+	display:none;
+}
+
+.btn_one i{
+	color: #000;
+	font-size: 30px;
+	font-weight: 700;
+	position: absolute;
+	left: 16px;
+	line-height:60px;
+	cursor: pointer;
+	opacity: 1;
+	transition: all 0.3s liner;
+}
+
+.sidebar_menu .btn_two i{
+	font-size: 25px;
+	line-height: 60px;
+	position: absolute;
+	left: 240px;
+	cursor: pointer;
+	opacity: 1;
+	transition: all 0.3s linear;	
+}
+
+.btn_one i:hover{
+	font-size: 29px;
+}
+
+.btn_two i:hover{
+	font-size: 24px;
+}
+
+#check:checked ~ .sidebar_menu{
+	left: 0px;
+}
+#check:checked ~ .btn_one i{
+	opacity: 0;
+}
+
+
+
+.container {
+	position: absolute;
+	display: flex;
+	padding-top: 60px;
+	padding-left: 25px;
+	width: 100%;
+	height: 100vh;
+	background-color: #fff;
+	font-size: 15px;
+}
+
+.container header {
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+}
+
+.container .field-responsive {
+	width: 15%;
+}
+
+.field-responsive .input-box{
+  width: 100%;
+  margin-top: 20px;
+}
+
+.input-box label{
+	color: #333;
+} 
+
+
+.field-responsive :where(.input-box input) {
+	position: relative;
+	  height: 50px;
+	  width: 100%;
+	  outline: none;
+	  font-size: 1rem;
+	  color: #707070;
+	  margin-top: 8px;
+	  border: 1px solid #ddd;
+	  border-radius: 6px;
+	  padding: 0 15px;
+}
+
+.input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+.container .table-responsive {
+	max-height: 100vh;
+	padding: 15px;
+	overflow-x: scroll;
+	overflow-y: scroll;
+	width: 85%;
+}
+
+@media screen and (max-width: 500px) {
+  .field-responsive .input-box {
+    flex-wrap: wrap;
+  }
+  .field-responsive :where(input-box) {
+    row-gap: 15px;
+  }
+}
+
+
+table, td, th {  
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 15px;
+}
+
+tr:hover {background-color: coral;}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+
+
+
+
+
+
+
+
+</style>
+
+</html>

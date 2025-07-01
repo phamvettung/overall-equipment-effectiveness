@@ -1,0 +1,114 @@
+@charset "ISO-8859-1";
+
+.container {
+	position: absolute;
+	display: flex;
+	padding-top: 60px;
+	padding-left: 25px;
+	width: 100%;
+	height: 100vh;
+	background-color: #fff;
+	font-size: 15px;
+}
+
+.container header {
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+}
+
+.container .field-responsive {
+	width: 15%;
+}
+
+
+.field-responsive .input-box{
+  width: 100%;
+  margin-top: 20px;
+}
+
+.input-box label{
+	color: #333;
+} 
+
+.input-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #707070;
+  font-size: 16px;
+}
+
+.field-responsive :where(.input-box input) {
+	position: relative;
+	  height: 50px;
+	  width: 100%;
+	  outline: none;
+	  font-size: 1rem;
+	  color: #707070;
+	  margin-top: 8px;
+	  border: 1px solid #ddd;
+	  border-radius: 6px;
+	  padding: 0 15px;
+}
+
+
+.input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.input-box button{
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #008000;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  width: 100%;
+  height: 40px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin-top: 5px;
+}
+button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+button:hover span {
+  padding-right: 25px;
+}
+
+button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.container .trend-responsive {
+	max-height: 100vh;
+	padding: 15px;
+	width: 85%;
+}
+
+@media screen and (max-width: 500px) {
+  .field-responsive .input-box {
+    flex-wrap: wrap;
+  }
+  .field-responsive :where(input-box) {
+    row-gap: 15px;
+  }
+}
+

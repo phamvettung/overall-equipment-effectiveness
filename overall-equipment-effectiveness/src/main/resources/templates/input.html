@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">		
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/sidebar-style.css">
+	<link rel="stylesheet" href="css/header-style.css">
+	<link rel="stylesheet" href="css/input-style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Overall Equipment Effectiveness</title>
+</head>
+
+
+
+<body>
+	<header th:replace="~{layout/header::header}"></header>	
+	<aside th:replace="~{layout/sidebar::sidebar}"></aside>
+	<div class="container" style="padding-top: 60px">
+			<div class="field-responsive">
+					<header>Input</header>
+					<div class="input-box">
+						<label for="machines">Machine name</label>
+						<input type="text" th:value="${machineName}" readonly>
+					</div>
+						
+					<div  class="input-box">
+						<label>Downtime type</label>
+					    <select th:field="*{downtimes}" class="downtime-select" onchange="if (this.selectedIndex) downtimeSelectOnChange();">
+								<option value="" disabled selected>Select a downtime type</option>
+								<option value="none">None</option>	
+								<option th:each="downtime: ${downtimes}" 
+										th:value="${downtime.type}" 
+										th:text="${downtime.name}"></option>									
+						</select>					
+					</div>
+					    
+					<div class="input-box">
+						<label>Date time</label>
+					    <input type="datetime-local" id="dateTime">
+					</div>		  
+				  		
+				  	<div class="input-box">
+				  		<label>Value (minute)</label>
+					    <input type="number" value="0" id="time">				    
+				  	</div>		
+				  	
+				  	<div class="input-box">
+				  		<button type="button" onclick="insertToTable()">Add to list</button>
+				  		<button type="button" onclick="saveInput()">Accept</button>	
+				  	</div>    
+			</div>
+			
+			<div class="table-responsive">
+					<table class="input-table">
+						  <thead>
+					        <tr>
+					          <th>No</th>
+					          <th>Date time</th>
+					          <th>Downtime type</th>
+					          <th>Downtime name</th>
+					          <th>Value (minute)</th>
+					          <th>Task</th>
+					        </tr>
+						  </thead>
+						  <tbody>	  	  
+						  </tbody>						  
+					</table>					
+			</div>
+	</div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/input-script.js"></script>
+
+</body>
+</html>

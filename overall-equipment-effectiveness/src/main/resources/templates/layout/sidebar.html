@@ -1,0 +1,42 @@
+<div th:fragment="sidebar" style="position: absolute; z-index: 11;">
+	<input type="checkbox" id="check">
+	<div class="btn_one">
+		<label for="check">
+			<i class="fas fa-bars"></i>
+		</label>
+	</div>
+	<div class="sidebar_menu">
+		<div class="logo">
+			<a href="#">Intech Group</a>	
+		</div>	
+		<div class="btn_two">
+			<label for="check">
+				<i class="fas fa-times"></i>
+			</label>
+		</div>
+		<div class="menu">
+			<ul>
+				<li><a th:href="@{home}"><i class="fas fa-qrcode"></i>Home</a></li>
+	            <li><a th:href="@{data}"><i class="fas fa-link"></i>OEE Data</a></li>
+	            <li><a th:href="@{data/mdc}"><i class="fas fa-sliders-h"></i>Machine Data Collection</a></li>
+	            <li><a th:href="@{trend}"><i class="fas fa-stream"></i>Statistics</a></li>
+	            <li><a th:href="@{machine}"><i class="fas fa-camera"></i>Machine Management</a></li>	            
+	            <li><a th:href="@{guid/hdvh}"><i class="fas fa-question-circle"></i>Guids</a></li>
+	            <li><a th:href="@{auth/logout}"><i class="fas fa-comment"></i>Logout</a></li>
+			</ul>
+		</div>	
+		
+		<!--
+		<div class="social_media">
+			<ul>
+				<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+	            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+	            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+	            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+			</ul>
+		</div>
+		 -->
+		 
+	</div>
+</div>
+

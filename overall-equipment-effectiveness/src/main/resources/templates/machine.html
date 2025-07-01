@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">		
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/sidebar-style.css">
+	<link rel="stylesheet" href="css/header-style.css">
+	<link rel="stylesheet" href="css/machine-style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Overall Equipment Effectiveness</title>
+</head>
+<body>
+	<header th:replace="~{layout/header::header}"></header>	
+	<aside th:replace="~{layout/sidebar::sidebar}"></aside>
+	<div class="container" style="padding-top: 60px">
+			<div class="field-responsive">
+					<header>Add new machine</header>
+					<div class="input-box">
+						<label>Machine code</label>
+						<input type="text" id="machineCode">
+					</div>
+									    
+					<div class="input-box">
+						<label>Machine name</label>
+						<input type="text" id="machineName">
+					</div>		
+					
+					<div class="input-box">
+						<label>IP Address</label>
+						<input type="text" id="ipAddress">
+					</div>
+				  	
+				  	<div class="input-box">
+						<label>Port</label>
+						<input type="number" id="port">
+					</div>
+				  	
+				  	<div class="input-box">
+				  		<button type="button" onclick="addNewMachine()">Add</button>
+				  	</div>    
+			</div>
+			
+			<div class="table-responsive">
+					<table id="machineTable">
+						  <thead>
+					        <tr>
+					          <th>ID</th>
+					          <th>Machine code</th>
+					          <th>Machine name</th>
+					          <th>Ip Address</th>
+					          <th>Port</th>
+					          <th>Task</th>
+					        </tr>
+						  </thead>
+						  <tbody id="machineBody">	 
+						  	<tr th:each="machine : ${machines}">
+						  		<td th:text="${machine.id}"></td>
+						  		<td th:text="${machine.code}"></td>
+						  		<td th:text="${machine.name}"></td>
+						  		<td th:text="${machine.ipAddress}"></td>
+						  		<td th:text="${machine.port}"></td>
+						  		<td>
+						  			<button th:onclick='showEditMachineForm([[${machine.id}]], [[${machine.code}]], [[${machine.name}]], [[${machine.ipAddress}]] , [[${machine.port}]])'>Edit</button>
+						  			<button th:onclick='removeMachine([[${machine.id}]])'>Remove</button>
+						  		</td>
+						  	</tr> 
+						  </tbody>						  
+					</table>					
+			</div>
+	</div>
+	
+	
+	
+	<div class="container mt-3 machine-form" id="machineForm">
+		  	<div class="machine-content">
+		  		<div class="input-box">
+		  			<label>Machine ID</label>
+		  			<input id="mId" type="text" readonly="readonly">
+		  		</div>
+		  		<div class="input-box">
+		  			<label>Machine code</label>
+		  			<input id="mCode" type="text">
+		  		</div>
+		  		<div class="input-box">
+		  			<label>Machine name</label>
+		  			<input id="mName" type="text">
+		  		</div>
+		  		<div class="input-box">
+		  			<label>IP Address</label>
+		  			<input id="mIpAddress" type="text">
+		  		</div>
+		  		<div class="input-box">
+		  			<label>Port</label>
+		  			<input id="mPort" type="number">
+		  		</div>
+		  		<div class="input-box">
+		  			<button onclick="closeMachineForm()">Close</button>
+		  			<button onclick="saveMachine()">OK</button>
+		  		</div>
+		  	</div>
+	</div>
+	
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/machine-script.js"></script>
+	
+</body>
+
+<style>
+	/* The Form (background) */
+	.machine-form {
+	  display: none; /* Hidden by default */
+	  position: fixed; /* Stay in place */
+	  z-index: 1; /* Sit on top */
+	  padding-top: 100px; /* Location of the box */
+	  left: 0;
+	  top: 0;
+	  width: 100%; /* Full width */
+	  height: 100%; /* Full height */
+	  overflow: auto; /* Enable scroll if needed */
+	  background-color: rgb(0,0,0); /* Fallback color */
+	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+	/* Modal Content */
+	.machine-content {
+	  background-color: #fefefe;
+	  margin: auto;
+	  padding: 20px;
+	  border: 1px solid #888;
+	  width: 40%;
+	}
+</style>
+
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/home-style.css">
+		<link rel="stylesheet" href="css/sidebar-style.css">
+		<link rel="stylesheet" href="css/header-style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<title>Overall Equipment Effectiveness</title>
+	</head>
+	
+	<style>	
+		
+	</style>
+	
+	<body>
+		<header th:replace="~{layout/header::header}"></header>	
+		<aside th:replace="~{layout/sidebar::sidebar}"></aside>
+			
+		<main class="main_box" id="mainBox">
+						<!-- OEE CONTENT-->
+						<div class="oee_content" th:each="oee : ${oeeOfMonth}">				
+							<!-- OEE HEADER -->
+							<div class="oee_header" >
+								<label th:text="${oee.machineName}"></label>
+								<div class="button-list">
+									<button class="btn_manual_input" 
+											th:onclick="openInputPage([[${oee.machineName}]], [[${oee.machineId}]]);">
+											<i class="fa-regular fa-pen-to-square"></i>
+									</button>				
+									
+								</div>
+							</div>
+							<!-- END HEADER -->
+						
+							<!-- OEE BODY -->
+							<div class="oee_body">	
+								<div class="oee_body--text">
+									<div class="w3-container" th:if="${oee.q500 == 1}">
+										<p class="gray_text">Status: </p><p style="color: limegreen; font-weight: bold;"> 	Running</p>
+									</div>
+									<div class="w3-container" th:if="${oee.q500 == 99}">
+										<p class="gray_text">Status: </p><p style="color: red; font-weight: bold;"> Paused</p>
+									</div>
+									<div class="w3-container" th:if="${oee.q500 == 0}">
+										<p class="gray_text">Status: </p><p style="color: white; font-weight: bold;"> Inactive</p>
+									</div>
+									<div class="w3-container">
+										<div><p class="gray_text">Total runtime: </p><p style="color: white" th:text="${oee.runtime} + ' hours'">999 hours</p></div>
+										<div><p class="gray_text">Total downtime: </p><p style="color: white" th:text="${oee.downtime} + ' hours'">999 hours</p></div>
+									</div>
+								</div>		
+								<div class="oee_body--index">					
+									<div class="left_index">
+										<div class="progress-circle">
+										  <div class="inner-circle">
+										    <span th:text="${oee.oee}">100%</span>
+										  </div>
+										  <input class="oee-value" type="hidden" th:value= "${oee.oee}">
+										</div>
+									</div>		
+									<div class="right_index">
+										<div class="w3-container">
+											<p th:text="${'Availability(H1): ' + oee.a + '%'}">Availability(H1): 100%</p>
+											<div class="w3-border" style="width: 200px">
+												<div th:class="${oee.a >= 80.0} ? 'w3-green' : (${oee.a >= 40.0 and oee.a < 80.0} ? 'w3-yellow' : 'w3-red')"
+											         th:style="'width:' + ${oee.a} + '%; height: 24px;'">
+											    </div>
+											</div>
+										</div>
+										<div class="w3-container">
+											<p th:text="${'Performance(H2): ' + oee.p + '%'}">Performance(H2): 100%</p>
+											<div class="w3-border" style="width: 200px">
+												<div th:class="${oee.p >= 80.0} ? 'w3-green' : (${oee.p >= 40.0 and oee.p < 80.0} ? 'w3-yellow' : 'w3-red')" 
+													 th:style="'width:' + ${oee.p} + '%; height: 24px;'"></div>
+											</div>
+										</div>
+										<div class="w3-container">
+											<p th:text="${'Quality(H3): ' + oee.q + '%'}">Quality (H3): 100%</p>
+											<div class="w3-border" style="width: 200px">
+												<div th:class="${oee.q >= 80.0} ? 'w3-green' : (${oee.q >= 40.0 and oee.q < 80.0} ? 'w3-yellow' : 'w3-red')" 
+												     th:style="'width:' + ${oee.q} + '%; height: 24px;'"></div>
+											</div>
+										</div>
+									</div>
+								</div>			
+						</div>
+						<!-- END BODY -->
+							
+						<!-- OEE FOOTER-->
+						<div class="oee_body--text">
+							<div><p class="gray_text" style="color:#A4CA32; margin-top: 20px">- Total Tool changes: </p><p style="color:white; margin-top: 20px" th:text="${oee.q200}">0</p></div>
+							<div><p class="gray_text" style="color:#A4CA32; margin-top: 10px">- Tool number in use: </p><p style="color:white; margin-top: 10px" th:text="${oee.q201}">0</p></div>
+						</div>
+						<!-- END FOOTER-->
+					</div>	
+					<!-- END OEE CONTENT-->									
+		</main>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/home-script.js"></script>
+	<script type="text/javascript">
+	function openInputPage(machineName, machineId){	
+		document.location.href = "/overall-equipment-effectiveness/input?mid="+ machineId +"&mname="+ machineName;					
+	}
+	
+	function getCookie(name) {
+		  const cookies = document.cookie.split(';');
+		  for (let i = 0; i < cookies.length; i++) {
+		    let cookie = cookies[i].trim(); // Remove leading/trailing whitespace
+		    // Check if this cookie starts with the name we're looking for
+		    if (cookie.startsWith(name + '=')) {
+		      // Extract and decode the cookie value
+		      return decodeURIComponent(cookie.substring(name.length + 1));
+		    }
+		  }
+		  return null; // Cookie not found
+		}
+	</script>
+</body>
+</html>

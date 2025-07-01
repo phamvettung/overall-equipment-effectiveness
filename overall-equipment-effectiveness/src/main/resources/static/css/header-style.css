@@ -1,0 +1,32 @@
+@charset "ISO-8859-1";
+
+.title{
+	background: #FFFFFF;
+	position: relative;
+	height: 60px;
+	width: 100%;
+	align-content: center;
+	text-align: center;
+}
+
+.title label{
+	color: #008000;
+	font-size: 25px;
+	font-weight: 500;
+}
+
+@media only screen and (max-width: 786px){
+    .title label{
+		color: #008000;
+		font-size: 16px;
+		font-weight: 200;
+    }
+}
+
+@media only screen and (max-width: 540px){
+    .title label{
+		color: #008000;
+		font-size: 13px;
+		font-weight: 180;
+    }
+}
