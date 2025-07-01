@@ -28,5 +28,5 @@ https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-c
 - Bảng account: quản lý, xác thực người dùng.
 
 ### CÁC CÔNG NGHỆ SỬ DỤNG
-- Java Spring boot, MS SQL Server
-- Ngôn ngữ: Java, CSS, Javascript
+- Java Spring boot, Spring Security JWT, Hibernate, JPA.
+- Hệ Quản trị CSDL: MS SQL Server.
