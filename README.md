@@ -28,5 +28,8 @@ https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-c
 - Bảng account: quản lý, xác thực người dùng.
 
 ### CÁC CÔNG NGHỆ SỬ DỤNG
-- Java Spring boot, Spring Security JWT, Hibernate, JPA.
+- Java Spring Boot, Spring Security JWT, Hibernate, JPA.
 - Hệ Quản trị CSDL: MS SQL Server.
+
+### TEST API
+https://github.com/user-attachments/assets/fe55e83c-89db-47f0-858b-9f42a2b25e60
