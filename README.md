@@ -33,6 +33,6 @@ https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-c
 
 ### DEMO
 [Watch demo video](./assets/oee_webapp.mp4)
-
+https://github.com/user-attachments/assets/688a3032-78ff-4c33-b872-35e01cfb0d6b
 ### TEST API
 https://github.com/user-attachments/assets/fe55e83c-89db-47f0-858b-9f42a2b25e60
