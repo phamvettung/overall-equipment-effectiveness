@@ -1,6 +1,8 @@
-# PHẦN MỀM TÍNH HIỆU SUẤT MÁY TỔNG THỂ - OEE
-### TỔNG QUAN
-Hệ thống thu thập dữ liệu thời gian máy chạy, máy dừng, các nguyên nhân gây dừng máy khác nhau. Tính toán OEE gồm: Sự sẵn sàng (Availability), Hiệu suất (Performance), Chất lượng (Quality). Từ đó giúp người quản lý có những đánh giá và điều chỉnh phù hợp để nâng cao hiệu suất.
+# OVERALL EQUIPMENT EFFECTIVENESS - OEE
+
+### OVERVIEW
+The Overall Equipment Effectiveness is a system that collects data of runtime, downtime, cause of machine stopping time. Compute OEE contain: Availability, Performance, Quality. This helps manager make appropriate assessments and adjustmets to improve performance.
+
 ### CÁC CHỨC NĂNG
 - Thu thập dữ liệu thời gian máy dừng, thời gian máy, nguyên nhân dừng máy qua các Bộ điều khiển OEE lắp trên máy CNC và kết nối trực tiếp tới máy CNC.
 - Tính các chỉ số A, P, Q, OEE,.. Đưa ra biểu đồ thống kê: Hiệu suất OEE, Thời gian lãng phí, Thời gian chạy máy/dừng máy.
