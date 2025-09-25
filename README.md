@@ -3,15 +3,15 @@
 ### OVERVIEW
 The Overall Equipment Effectiveness is a system that collects data of runtime, downtime, cause of machine stopping time. Compute OEE contain: Availability, Performance, Quality. This helps manager make appropriate assessments and adjustmets to improve performance.
 
-### CÁC CHỨC NĂNG
-- Thu thập dữ liệu thời gian máy dừng, thời gian máy, nguyên nhân dừng máy qua các Bộ điều khiển OEE lắp trên máy CNC và kết nối trực tiếp tới máy CNC.
-- Tính các chỉ số A, P, Q, OEE,.. Đưa ra biểu đồ thống kê: Hiệu suất OEE, Thời gian lãng phí, Thời gian chạy máy/dừng máy.
-- Tổng hợp chi tiết thời gian máy chạy, máy dừng. Trích xuất dữ liệu theo từng tháng, từng ngày.
-- Thu thập dữ liệu tự động hoặc nhập liệu bằng tay.
-- Cung cấp các API cho các hệ thống khác, bảo mật API.
-- Tính năng đăng nhập, xác thực người dùng.
-- Quản lý máy: thêm, sửa, xóa.
-- Hệ thống hoạt động trong mạng LAN cục bộ, người dùng có thể truy cập giám sát từ xa thông qua trình duyệt web.
+### FEATURES
+- Collect data of runtime, downtime, cause of machine stopping time via OEE controller installed on CNC machines or connect direct to them.
+- Compute A, P, Q, OEE,.. Give statistic charts: OEE, Wasted time, Runtime/Downtime of machine.
+- Detailed of summary of machine running, stopping time. Extract data by month and by day
+- Auto data collection or Manual data entry.
+- Provide APIs for other systems, API security.
+- Login, user authentication.
+- Manage machine: Add, Update, Delete.
+- Access system via Web browser
 
 ### SƠ ĐỒ KẾT NỐI
 ![overall equipment effectiveness](/assets/oee_diagram.PNG)
