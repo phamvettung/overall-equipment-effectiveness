@@ -9,7 +9,7 @@ The Overall Equipment Effectiveness is a system that collects data of runtime, d
 - Detailed of summary of machine running, stopping time. Extract data by month and by day
 - Auto data collection or Manual data entry.
 - Provide APIs for other systems, API security.
-- Login, user authentication.
+- User authentication.
 - Manage machine: Add, Update, Delete.
 - Access system via Web browser
 
@@ -27,7 +27,7 @@ https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-c
 - machine table: manage Machine
 - input table: Collect data of runtime, downtime, etc.
 - machine_data_collection table: collect current states of machine (running/stopped), num of tool use, etc.
-- account table: login, authenticate.
+- account table: user authenticate.
 
 ### FAMEWORK USED
 - Java Spring Boot, Spring Security JWT, Hibernate, JPA.
