@@ -22,7 +22,7 @@ The Overall Equipment Effectiveness is a system that collects data of runtime, d
 https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-collection---ngc.html
 
 ### TABLE STRUCTURE
-![overall equipment effectiveness](/assets/table_structue.png)
+![overall equipment effectiveness](/assets/table_structure.png)
 
 - machine table: manage Machine
 - input table: Collect data of runtime, downtime, etc.
