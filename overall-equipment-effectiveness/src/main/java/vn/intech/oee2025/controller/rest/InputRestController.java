@@ -15,7 +15,7 @@ import vn.intech.oee2025.entity.Machine;
 import vn.intech.oee2025.repository.DowntimeRepository;
 import vn.intech.oee2025.repository.InputRepository;
 import vn.intech.oee2025.repository.MachineRepository;
-import vn.intech.oee2025.security.DataResponse;
+import vn.intech.oee2025.security.MessageResponse;
 
 @RestController
 @RequestMapping("api/input")
@@ -29,7 +29,7 @@ public class InputRestController {
 	private MachineRepository machineRepo;
 	
 	@PostMapping(value = "/save")
-	public ResponseEntity<DataResponse> save(@RequestBody InputDto dto) throws Exception{
+	public ResponseEntity<MessageResponse> save(@RequestBody InputDto dto) throws Exception{
 		Downtime downtime = downtimeRepo.findById(dto.getDowntimeType())
                 .orElseThrow(() -> new RuntimeException("Downtime not found"));
 		Machine machine = machineRepo.findById(dto.getMachineId())
@@ -43,7 +43,7 @@ public class InputRestController {
 	    input.setValue(dto.getValue());
 	    
 	    Input savedInput = inputRepo.save(input);
-	    DataResponse dtResponse = new DataResponse(0, "saved successfully.", savedInput);
+	    MessageResponse dtResponse = new MessageResponse(0, "saved successfully.", savedInput);
 	    
 		return ResponseEntity.ok(dtResponse);
 	}

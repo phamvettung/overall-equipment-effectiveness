@@ -15,7 +15,7 @@ import vn.intech.oee2025.dto.OeeDto;
 import vn.intech.oee2025.repository.DowntimeRepository;
 import vn.intech.oee2025.repository.InputRepository;
 import vn.intech.oee2025.repository.MachineRepository;
-import vn.intech.oee2025.security.DataResponse;
+import vn.intech.oee2025.security.MessageResponse;
 import vn.intech.oee2025.service.impl.OeeServiceImpl;
 
 @RestController
@@ -32,9 +32,9 @@ public class DataRestController {
 	private OeeServiceImpl oeeService = OeeServiceImpl.getInstance();
 	
 	@RequestMapping(value = "/oee", method = RequestMethod.GET)
-	public ResponseEntity<DataResponse> getMonthlyOee(@RequestParam("startDate") Date start, @RequestParam("endDate") Date end){						
+	public ResponseEntity<MessageResponse> getMonthlyOee(@RequestParam("startDate") Date start, @RequestParam("endDate") Date end){						
 		List<OeeDto> oees = oeeService.getMonthlyOee(start, end);		
-		DataResponse dtResponse = new DataResponse(0, "data fetched successfully.", oees);	
+		MessageResponse dtResponse = new MessageResponse(0, "data fetched successfully.", oees);	
 		return ResponseEntity.ok(dtResponse);
 	}
 	

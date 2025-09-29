@@ -13,11 +13,13 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Service;
 
 import vn.intech.oee2025.dto.MachineDataDto;
 import vn.intech.oee2025.dto.OeeDto;
 import vn.intech.oee2025.service.OeeService;
 
+@Service
 public class OeeServiceImpl implements OeeService{
 
 	DriverManagerDataSource dataSource = null;

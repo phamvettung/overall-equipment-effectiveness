@@ -14,13 +14,14 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import jakarta.servlet.http.Cookie;
 
 import vn.intech.oee2025.dto.UserSecurityDto;
-import vn.intech.oee2025.service.CustomUserDetailService;
 import vn.intech.oee2025.util.JwtUtil;
 
 @Component
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter{
 	
 	@Autowired
@@ -35,33 +36,37 @@ public class JwtFilter extends OncePerRequestFilter{
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
    ) throws ServletException, IOException {
-		
-		String token = null, username = null;
-		
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.substring(7);
-        }
-        // If not in header, try to get from cookie
-        if (token == null) {
-            token = getJwtFromCookies(request);
-        }     
-        if (token != null) {
-            username = jwtUtil.extractUsername(token);
-        }
-                 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserSecurityDto userDetails = (UserSecurityDto)userDetaislService.loadUserByUsername(username);
-            if (jwtUtil.isTokenValid(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
+		try {
+			String token = null, username = null;
+			// Check whether if header authorization have JWT or not.
+	        String authHeader = request.getHeader("Authorization");
+	        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+	            token = authHeader.substring(7);
+	        }
+	        
+	        // If not in header, try to get from cookie
+	        if (token == null) {
+	            token = getJwtFromCookies(request);
+	        }     
+	        if (token != null) {
+	            username = jwtUtil.extractUsername(token);
+	        }
+	                 
+	        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {        	       	
+	            UserSecurityDto userDetails = (UserSecurityDto)userDetaislService.loadUserByUsername(username);
+	            if (jwtUtil.isTokenValid(token, userDetails)) {
+	                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+	                        userDetails, null, userDetails.getAuthorities());
 
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-                                
-            }
-        }
-        filterChain.doFilter(request, response);
+	                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+	                SecurityContextHolder.getContext().setAuthentication(authToken);
+	                                
+	            }
+	        }
+	        filterChain.doFilter(request, response);
+		}catch (Exception e) {
+			log.error("fail on set user authentication. ", e);
+		}
     }
 	
 	

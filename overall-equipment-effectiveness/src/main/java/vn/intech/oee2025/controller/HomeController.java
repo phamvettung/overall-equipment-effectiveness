@@ -98,11 +98,7 @@ public class HomeController {
 				oeeMdc.add(oeeMdcDto);
 			}
 		}
-		
-
-		
-		System.out.println("LENGTH= " + oeeMdc.size());
-								
+											
 		model.addAttribute("machines", machines);
 		//model.addAttribute("oeeOfMonth", oeeOfMonth);
 		model.addAttribute("oeeOfMonth", oeeMdc);

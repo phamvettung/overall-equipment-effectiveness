@@ -16,7 +16,7 @@ import vn.intech.oee2025.entity.Machine;
 import vn.intech.oee2025.repository.MachineRepository;
 import vn.intech.oee2025.repository.MdcRepository;
 import vn.intech.oee2025.repository.QCommandRepository;
-import vn.intech.oee2025.security.DataResponse;
+import vn.intech.oee2025.security.MessageResponse;
 
 @RestController
 @RequestMapping("api/mdc")
@@ -30,7 +30,7 @@ public class MdcRestController {
 	private QCommandRepository qCommandRepo;
 	
 	@PostMapping(value = "/save")
-	public ResponseEntity<DataResponse> save(@RequestBody MachineDataCollectionDto dto) throws Exception{
+	public ResponseEntity<MessageResponse> save(@RequestBody MachineDataCollectionDto dto) throws Exception{
 				
 		Machine machine = machineRepo.findById(dto.getMachineId())
 				.orElseThrow(() -> new RuntimeException("Machine not found"));
@@ -44,7 +44,7 @@ public class MdcRestController {
 		mdc.setValue(dto.getValue());			
 		MachineDataCollection savedMdc = mdcRepo.save(mdc);
 		
-		DataResponse dtResponse = new DataResponse(0, "saved successfully.", savedMdc);
+		MessageResponse dtResponse = new MessageResponse(0, "saved successfully.", savedMdc);
 		return ResponseEntity.ok(dtResponse);
 	}
 	
