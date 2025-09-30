@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.AntPathMatcher;
 
-import vn.intech.oee2025.security.CustomUserDetailService;
+import vn.intech.oee2025.security.CustomUserDetailsService;
 import vn.intech.oee2025.security.JwtFilter;
 
 @Configuration
@@ -25,7 +25,7 @@ public class SecurityConfig{
 	@Autowired
 	private JwtFilter jwtFilter;
 	@Autowired
-	private CustomUserDetailService userDetailsService;
+	private CustomUserDetailsService userDetailsService;
 	
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {

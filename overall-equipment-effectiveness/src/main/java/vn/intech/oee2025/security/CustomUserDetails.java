@@ -11,13 +11,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import vn.intech.oee2025.entity.Account;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
-@Slf4j
+@NoArgsConstructor
 public class CustomUserDetails implements UserDetails{
 
 	/**
@@ -25,10 +29,10 @@ public class CustomUserDetails implements UserDetails{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int accountId;
-	@JsonIgnore
 	private String username;
 	@JsonIgnore
 	private String password;
+	private String fullname;
 	private String email;
 	private Collection<? extends GrantedAuthority> authorities;
 
@@ -43,23 +47,24 @@ public class CustomUserDetails implements UserDetails{
 		//Get list roles from Account
 		List<GrantedAuthority> listAuthorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getRoleName().name())) //scan each role in list roles and cast it into SimpleGrantedAuthority
-				.collect(Collectors.toList()); //assign to listAuthorities
+				.collect(Collectors.toList()); //assign to listAuthorities	
 		
 		return new CustomUserDetails(user.getAccountId(),
 				user.getUsername(),
 				user.getPassword(),
+				user.getFullname(),
 				user.getEmail(),
 				listAuthorities);
 	}
 	
 	@Override
 	public String getPassword() {
-		return this.getPassword();
+		return this.password;
 	}
 
 	@Override
 	public String getUsername() {
-		return this.getUsername();
+		return this.username;
 	}
 	
 	@Override

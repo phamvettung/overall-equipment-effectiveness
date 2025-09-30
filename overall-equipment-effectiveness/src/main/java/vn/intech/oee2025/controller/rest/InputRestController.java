@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.intech.oee2025.dto.InputDto;
+import vn.intech.oee2025.dto.response.MessageResponse;
 import vn.intech.oee2025.entity.Downtime;
 import vn.intech.oee2025.entity.Input;
 import vn.intech.oee2025.entity.Machine;
+import vn.intech.oee2025.exception.ErrorCode;
 import vn.intech.oee2025.repository.DowntimeRepository;
 import vn.intech.oee2025.repository.InputRepository;
 import vn.intech.oee2025.repository.MachineRepository;
-import vn.intech.oee2025.security.MessageResponse;
 
 @RestController
 @RequestMapping("api/input")
@@ -43,8 +44,7 @@ public class InputRestController {
 	    input.setValue(dto.getValue());
 	    
 	    Input savedInput = inputRepo.save(input);
-	    MessageResponse dtResponse = new MessageResponse(0, "saved successfully.", savedInput);
-	    
-		return ResponseEntity.ok(dtResponse);
+	    ErrorCode errorCode = ErrorCode.SUCCESS;
+		return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), "saved successfully.", savedInput));
 	}
 }

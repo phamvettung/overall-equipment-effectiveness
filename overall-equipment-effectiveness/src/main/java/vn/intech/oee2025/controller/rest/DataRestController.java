@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.intech.oee2025.dto.OeeDto;
+import vn.intech.oee2025.dto.response.MessageResponse;
+import vn.intech.oee2025.exception.ErrorCode;
 import vn.intech.oee2025.repository.DowntimeRepository;
 import vn.intech.oee2025.repository.InputRepository;
 import vn.intech.oee2025.repository.MachineRepository;
-import vn.intech.oee2025.security.MessageResponse;
 import vn.intech.oee2025.service.impl.OeeServiceImpl;
 
 @RestController
@@ -33,9 +34,9 @@ public class DataRestController {
 	
 	@RequestMapping(value = "/oee", method = RequestMethod.GET)
 	public ResponseEntity<MessageResponse> getMonthlyOee(@RequestParam("startDate") Date start, @RequestParam("endDate") Date end){						
-		List<OeeDto> oees = oeeService.getMonthlyOee(start, end);		
-		MessageResponse dtResponse = new MessageResponse(0, "data fetched successfully.", oees);	
-		return ResponseEntity.ok(dtResponse);
+		List<OeeDto> oees = oeeService.getMonthlyOee(start, end);	
+		ErrorCode errorCode = ErrorCode.SUCCESS;
+		return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), "data fetched successfully.", oees));
 	}
 	
 }

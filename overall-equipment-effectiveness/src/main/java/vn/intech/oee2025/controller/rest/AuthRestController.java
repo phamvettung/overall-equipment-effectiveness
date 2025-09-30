@@ -1,7 +1,6 @@
 package vn.intech.oee2025.controller.rest;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +26,17 @@ import org.springframework.web.servlet.view.RedirectView;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import vn.intech.oee2025.dto.UserSecurityDto;
+import jakarta.validation.Valid;
+import vn.intech.oee2025.dto.request.LoginRequest;
+import vn.intech.oee2025.dto.request.SignUpRequest;
+import vn.intech.oee2025.dto.response.JwtResponse;
+import vn.intech.oee2025.dto.response.MessageResponse;
 import vn.intech.oee2025.entity.Account;
 import vn.intech.oee2025.entity.ERole;
 import vn.intech.oee2025.entity.Role;
-import vn.intech.oee2025.security.JwtResponse;
-import vn.intech.oee2025.security.LoginRequest;
-import vn.intech.oee2025.security.MessageResponse;
-import vn.intech.oee2025.security.SignUpRequest;
+import vn.intech.oee2025.exception.CustomException;
+import vn.intech.oee2025.exception.ErrorCode;
+import vn.intech.oee2025.security.CustomUserDetails;
 import vn.intech.oee2025.service.RoleService;
 import vn.intech.oee2025.service.UserSevice;
 import vn.intech.oee2025.util.JwtUtil;
@@ -88,13 +90,14 @@ public class AuthRestController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest authRequest, HttpServletResponse response) { 	  	 	
+    public ResponseEntity<MessageResponse> login(@RequestBody LoginRequest authRequest, HttpServletResponse response) { 	  	 	
     	
     	try {  		
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword() )); 
             SecurityContextHolder.getContext().setAuthentication(authentication);                    
-            UserSecurityDto userDetails = (UserSecurityDto) authentication.getPrincipal();           
+            //UserSecurityDto userDetails = (UserSecurityDto) authentication.getPrincipal();   
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal(); 
             String accessToken = jwtUtil.generateAccessToken(userDetails.getUsername()); 
             String refreshToken = jwtUtil.generateRefreshToken(userDetails.getUsername());
             
@@ -117,26 +120,31 @@ public class AuthRestController {
             response.addCookie(refreshCookie);
             
             
-            JwtResponse authorization = new JwtResponse(accessToken, jwtUtil.getACCESS_TOKEN_EXPIRATION(), "Bearer ", userDetails.getUsername(), userDetails.getEmail());         
-            return new ResponseEntity<>(new MessageResponse(0, "Login successful." ,authorization), HttpStatus.OK);
+            JwtResponse authorization = new JwtResponse(accessToken, jwtUtil.getACCESS_TOKEN_EXPIRATION(), "Bearer ");  
+            ErrorCode errorCode = ErrorCode.SUCCESS;
+            return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), "Login successfully." , authorization));
             
         } catch (UsernameNotFoundException | BadCredentialsException e) {
-        	return new ResponseEntity<>(new MessageResponse(1, "Username or password incorrect",null), HttpStatus.UNAUTHORIZED);
+        	ErrorCode errorCode = ErrorCode.USERNAME_PASSWORD_INCORRECT;
+        	return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), errorCode.getMessage() ,null));
 		} catch (AuthenticationException e) {
-			return new ResponseEntity<>(new MessageResponse(99, "Invalid credentials",null), HttpStatus.BAD_REQUEST);
+        	ErrorCode errorCode = ErrorCode.INVALID_CREDENTIALS;
+        	return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), errorCode.getMessage() ,null));
         }
     
     }
     
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signupRequest) throws Exception{	
+	public ResponseEntity<MessageResponse> registerUser(@RequestBody @Valid SignUpRequest signupRequest) throws Exception{	
 		
 		if (userService.existsByUsername(signupRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse(1, "Username is already.", null));
+			ErrorCode errorCode = ErrorCode.USER_EXISTED;
+			return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), errorCode.getMessage(), null));
 		}
 		
 		if (userService.existsByEmail(signupRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse(1, "Email is already.", null));
+			ErrorCode errorCode = ErrorCode.EMAIL_EXISTED;
+			return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), errorCode.getMessage(), null));
 		}
 		
 		Account account = new Account();
@@ -149,26 +157,26 @@ public class AuthRestController {
 		if(strRoles == null) {
 			//default role user
 			Role userRole = roleService.findByRoleName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Erorr: Role is not found"));
+					.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_EXISTED));
 			lstRoles.add(userRole);
 		}else {					
 			strRoles.forEach(role -> {				
 				switch (role) {
 					case "admin": {
 						Role adminRole = roleService.findByRoleName(ERole.ROLE_ADMIN)
-								.orElseThrow(()->new RuntimeException("Erorr: Role is not found"));
+								.orElseThrow(() -> new CustomException(ErrorCode.ROLE_NOT_EXISTED));
 						lstRoles.add(adminRole);
 						break;
 					}
 					case "moderator": {
 						Role modRole = roleService.findByRoleName(ERole.ROLE_MODERATOR)
-								.orElseThrow(()->new RuntimeException("Erorr: Role is not found"));
+								.orElseThrow(() -> new CustomException(ErrorCode.ROLE_NOT_EXISTED));
 						lstRoles.add(modRole);
 						break;
 					}
 					case "user": {
 						Role userRole = roleService.findByRoleName(ERole.ROLE_USER)
-								.orElseThrow(()->new RuntimeException("Erorr: Role is not found"));
+								.orElseThrow(() -> new CustomException(ErrorCode.ROLE_NOT_EXISTED));
 						lstRoles.add(userRole);
 						break;
 					}				
@@ -180,7 +188,8 @@ public class AuthRestController {
 		}		
 		account.setRoles(lstRoles);
 		userService.saveOrUpdate(account);
-		return ResponseEntity.ok(new MessageResponse(0, "User registered successfully", null));
+		ErrorCode errorCode = ErrorCode.SUCCESS;
+		return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), "User registered successfully", null));
 	}
 	
     @GetMapping("/logout")

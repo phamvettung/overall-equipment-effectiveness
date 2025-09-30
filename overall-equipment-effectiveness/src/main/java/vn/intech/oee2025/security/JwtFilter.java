@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import jakarta.servlet.http.Cookie;
 
-import vn.intech.oee2025.dto.UserSecurityDto;
 import vn.intech.oee2025.util.JwtUtil;
 
 @Component
@@ -28,7 +27,7 @@ public class JwtFilter extends OncePerRequestFilter{
     private JwtUtil jwtUtil;
 	
 	@Autowired
-	private CustomUserDetailService userDetaislService;
+	private CustomUserDetailsService userDetaislService;
 
 	@Override
     protected void doFilterInternal(
@@ -53,7 +52,7 @@ public class JwtFilter extends OncePerRequestFilter{
 	        }
 	                 
 	        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {        	       	
-	            UserSecurityDto userDetails = (UserSecurityDto)userDetaislService.loadUserByUsername(username);
+	            CustomUserDetails userDetails = (CustomUserDetails)userDetaislService.loadUserByUsername(username);
 	            if (jwtUtil.isTokenValid(token, userDetails)) {
 	                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
 	                        userDetails, null, userDetails.getAuthorities());

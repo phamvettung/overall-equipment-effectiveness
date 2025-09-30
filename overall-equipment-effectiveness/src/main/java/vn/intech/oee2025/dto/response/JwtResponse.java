@@ -1,6 +1,4 @@
-package vn.intech.oee2025.security;
-
-import java.util.List;
+package vn.intech.oee2025.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +11,4 @@ public class JwtResponse {
 	private String accessToken;
 	private long expiresIn;
 	private String tokenType;
-	
-	private String username;
-	private String email;
 }

@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.intech.oee2025.dto.MachineDataDto;
+import vn.intech.oee2025.dto.response.MessageResponse;
 import vn.intech.oee2025.dto.MachineDataCollectionDto;
 import vn.intech.oee2025.entity.MachineDataCollection;
 import vn.intech.oee2025.entity.QCommand;
+import vn.intech.oee2025.exception.ErrorCode;
 import vn.intech.oee2025.entity.Machine;
 import vn.intech.oee2025.repository.MachineRepository;
 import vn.intech.oee2025.repository.MdcRepository;
 import vn.intech.oee2025.repository.QCommandRepository;
-import vn.intech.oee2025.security.MessageResponse;
 
 @RestController
 @RequestMapping("api/mdc")
@@ -44,8 +45,8 @@ public class MdcRestController {
 		mdc.setValue(dto.getValue());			
 		MachineDataCollection savedMdc = mdcRepo.save(mdc);
 		
-		MessageResponse dtResponse = new MessageResponse(0, "saved successfully.", savedMdc);
-		return ResponseEntity.ok(dtResponse);
+		ErrorCode errorCode = ErrorCode.SUCCESS;
+		return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), errorCode.getMessage(), savedMdc));
 	}
 	
 	

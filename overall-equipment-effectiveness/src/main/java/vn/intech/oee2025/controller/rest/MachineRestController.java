@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
+import vn.intech.oee2025.dto.response.MessageResponse;
 import vn.intech.oee2025.entity.Machine;
+import vn.intech.oee2025.exception.ErrorCode;
 import vn.intech.oee2025.repository.MachineRepository;
 
 @RestController
@@ -27,17 +29,17 @@ public class MachineRestController {
 	private MachineRepository repo;
 	
 	@GetMapping
-	public ResponseEntity<?> getAll(){
-		System.out.println(1);
+	public ResponseEntity<MessageResponse> getAll(){
 		List<Machine> machines = repo.findAll();
-		if(machines.isEmpty())
+		if(machines.isEmpty()) {
 			return ResponseEntity.noContent().build();
-		return ResponseEntity.ok(machines);
+		}
+		ErrorCode errorCode = ErrorCode.SUCCESS;
+		return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), errorCode.getMessage(), machines));
 	}
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Machine machine){
-		System.out.println(1);
 		Machine createdMachine = repo.save(machine);
 		URI uri = URI.create("/api/machine/" + createdMachine.getId());
 		return ResponseEntity.created(uri).body(createdMachine);
@@ -60,7 +62,8 @@ public class MachineRestController {
         } else {
             throw new RuntimeException("Machine not found with id: " + machineId);
         }            
-        return ResponseEntity.ok(updatedMachine);
+		ErrorCode errorCode = ErrorCode.SUCCESS;
+		return ResponseEntity.status(errorCode.getStatusCode()).body(new MessageResponse(errorCode.getCode(), errorCode.getMessage(), updatedMachine));
 	}
 	
 	@DeleteMapping("/{id}")

@@ -55,7 +55,7 @@ public class Account implements Serializable {
 	@Column(name="AccountStatus")
 	private boolean accountStatus;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="UserRole", joinColumns = @JoinColumn(name = "AccountId"), inverseJoinColumns = @JoinColumn(name = "RoleId"))
 	private Set<Role> roles = new HashSet<>();
 }

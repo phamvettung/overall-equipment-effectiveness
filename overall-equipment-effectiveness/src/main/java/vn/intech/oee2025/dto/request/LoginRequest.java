@@ -1,4 +1,4 @@
-package vn.intech.oee2025.security;
+package vn.intech.oee2025.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

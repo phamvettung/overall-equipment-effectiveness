@@ -1,20 +1,23 @@
-package vn.intech.oee2025.security;
+package vn.intech.oee2025.dto.request;
 
 import java.util.Date;
 import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
 public class SignUpRequest {
+	
 	private String username;
+	@Size(min = 8, message = "INVALID_PASSWORD")
     private String password;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date created = new Date();
+    private Date created = new Date(); 
     private String fullname;
     private String email;
     private boolean accountStatus = true;
