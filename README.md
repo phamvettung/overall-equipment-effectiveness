@@ -27,7 +27,7 @@ https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/machine-data-c
 - machine table: manage Machine
 - input table: Collect data of runtime, downtime, etc.
 - machine_data_collection table: collect current states of machine (running/stopped), num of tool use, etc.
-- account table: user authenticate.
+- account table: user authentication.
 
 ### FAMEWORK USED
 - Java Spring Boot, Spring Security JWT, Hibernate, JPA.
